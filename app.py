@@ -36,35 +36,10 @@ except:
     st.error("⚠️ Falta configurar la API Key en los secretos.")
     st.stop()
 
-# --- DIAGNÓSTICO: ¿QUÉ MODELOS VE GOOGLE? ---
-# Esto imprimirá en tu pantalla la lista real de modelos disponibles
-st.info("🔍 Buscando modelos disponibles en tu cuenta...")
-available_models = []
-try:
-    for m in genai.list_models():
-        if 'generateContent' in m.supported_generation_methods:
-            available_models.append(m.name)
-    st.success(f"Modelos encontrados: {available_models}")
-except Exception as e:
-    st.error(f"Error de conexión con Google: {e}")
-    st.stop()
-
-# --- SELECCIÓN AUTOMÁTICA DEL MEJOR MODELO ---
-# Intentaremos usar el mejor disponible de la lista encontrada
-if "models/gemini-1.5-pro" in available_models:
-    model_name = "models/gemini-1.5-pro"
-elif "models/gemini-1.5-flash" in available_models:
-    model_name = "models/gemini-1.5-flash"
-elif "models/gemini-pro" in available_models:
-    model_name = "models/gemini-pro"
-else:
-    # Si no encuentra ninguno conocido, agarra el primero de la lista
-    model_name = available_models[0]
-
-st.write(f"🤖 Usando modelo: **{model_name}**")
-
+# --- CONFIGURACIÓN DEL MODELO ---
+# Usamos la versión 2.0 Flash: Es muy rápida, inteligente y soporta prompts largos gratis.
 model = genai.GenerativeModel(
-  model_name=model_name,
+  model_name="models/gemini-2.0-flash", 
   generation_config={"temperature": 0, "max_output_tokens": 8192}
 )
 
