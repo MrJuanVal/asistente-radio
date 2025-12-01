@@ -37,8 +37,8 @@ except:
     st.stop()
 
 model = genai.GenerativeModel(
-  model_name="gemini-1.5-flash",
-  generation_config={"temperature": 0, "max_output_tokens": 8192}
+model_name="gemini-1.5-pro",
+    generation_config={"temperature": 0, "max_output_tokens": 8192}
 )
 
 # --- PROMPT MAESTRO (YA INCLUIDO) ---
